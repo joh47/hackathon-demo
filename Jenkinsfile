@@ -1,11 +1,17 @@
 pipeline {
+    environment {
+        registry = "joh47/hackathon-demo"
+        registryCredential = "dockerhub"
+    }
     agent {
-        docker { image 'node:14-alpine' }
+        any
     }
     stages {
-        stage('Test') {
+        stage('Build') {
             steps {
-                sh 'node --version'
+                script {
+                    docker.build registry + ":latest"
+                }
             }
         }
     }
